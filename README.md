@@ -1,15 +1,23 @@
 # Academic Study Skills for Claude
 
-A dual-skill scholarship toolkit for Claude (Claude Code, Claude Projects, and Claude Desktop), combining Fr. Oskari Juurikkala's **`study`** engine from [AC HUB Starter](https://github.com/oskarijuurikkala/ac-hub-starter) with the **`socratic-mentor`** oral sparring and supervisory skill.
+A complete tripartite scholarship toolkit for Claude (Claude Code, Claude Projects, and Claude Desktop), combining:
+1. **`source-converter`**: Geometry-aware conversion of academic PDFs and EPUBs into citable, anchor-preserved Markdown.
+2. **`study`**: Fr. Oskari Juurikkala's analytical reading engine from [AC HUB Starter](https://github.com/oskarijuurikkala/ac-hub-starter).
+3. **`socratic-mentor`**: Closed-book oral sparring and supervisory viva examination.
 
 ```text
 academic-study-skills/
 ├── README.md
-├── socratic-mentor/
+├── source-converter/             # Academic PDF & EPUB conversion with layout recovery
+│   ├── SKILL.md
+│   ├── academic_convert.py       # Geometry-aware extraction engine
+│   └── references/
+│       └── academic_traps.md     # Why naive converters corrupt academic literature
+├── socratic-mentor/              # Socratic supervisor & oral examination partner
 │   ├── SKILL.md
 │   └── references/
 │       └── questions.md
-└── study/
+└── study/                       # Fr. Oskari Juurikkala's AC HUB reading partner
     ├── SKILL.md
     ├── README.md
     └── references/
@@ -27,6 +35,14 @@ academic-study-skills/
 ---
 
 ## 1. Overview of the Skills
+
+### `source-converter`
+* **Role**: Ingestion and layout-preserving conversion of academic monographs, journal articles, and patristic editions.
+* **Core Capabilities**:
+  * **Multi-Column Recovery**: Calculates bounding-box gutters to reassemble two-column journals (*Recherches de science religieuse*, *Patrologia Graeca*) column-by-column rather than reading horizontally.
+  * **Header & Folio Stripping**: Eliminates recurring running headers from the body prose while turning page folios into citable milestones (`[p. 142]{#p.142}`).
+  * **De-hyphenation & Paragraph Unwrapping**: Measures vertical line leading to distinguish true paragraph breaks from soft wraps, stitching hyphenated words back together.
+  * **Calibre/EPUB Sanitisation**: Recursively unwraps nested span tags and strips dead spine targets (`#part0001.html`).
 
 ### `study` (by Fr. Oskari Juurikkala / AC HUB)
 * **Upstream**: [oskarijuurikkala/ac-hub-starter](https://github.com/oskarijuurikkala/ac-hub-starter)
