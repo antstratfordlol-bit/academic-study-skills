@@ -1,9 +1,10 @@
-# Academic Study Skills for Claude
+# Academic Study Skills for Claude & Antigravity
 
-A complete tripartite scholarship toolkit for Claude (Claude Code, Claude Projects, and Claude Desktop), combining:
-1. **`source-converter`**: Geometry-aware conversion of academic PDFs and EPUBs into citable, anchor-preserved Markdown.
-2. **`study`**: Fr. Oskari Juurikkala's analytical reading engine from [AC HUB Starter](https://github.com/oskarijuurikkala/ac-hub-starter).
-3. **`socratic-mentor`**: Closed-book oral sparring and supervisory viva examination.
+A complete quadripartite scholarship toolkit for Claude and Antigravity, combining:
+1. **`source-converter`**: Geometry-aware conversion of academic PDFs and EPUBs with automated audit scripts and a forensic Reviewer Subagent.
+2. **`theological-translator`**: High-fidelity translation of academic theology, liturgy, and patristics with deterministic apparatus verification and a bilingual Reviewer Subagent.
+3. **`study`**: Fr. Oskari Juurikkala's analytical reading engine from [AC HUB Starter](https://github.com/oskarijuurikkala/ac-hub-starter).
+4. **`socratic-mentor`**: Closed-book oral sparring and supervisory viva examination.
 
 ```text
 academic-study-skills/
@@ -11,8 +12,15 @@ academic-study-skills/
 ├── source-converter/             # Academic PDF & EPUB conversion with layout recovery
 │   ├── SKILL.md
 │   ├── academic_convert.py       # Geometry-aware extraction engine
+│   ├── audit_markdown.py         # Deterministic structural quality auditor
 │   └── references/
 │       └── academic_traps.md     # Why naive converters corrupt academic literature
+├── theological-translator/       # Dual-agent scholarly translation pipeline
+│   ├── SKILL.md
+│   ├── scripts/
+│   │   └── verify_translation.py # Apparatus, footnote parity, and formatting verifier
+│   └── references/
+│       └── theological_glossary.md # PUSC liturgical, dogmatic, and Latin vocabulary
 ├── socratic-mentor/              # Socratic supervisor & oral examination partner
 │   ├── SKILL.md
 │   └── references/
@@ -43,6 +51,14 @@ academic-study-skills/
   * **Header & Folio Stripping**: Eliminates recurring running headers from the body prose while turning page folios into citable milestones (`[p. 142]{#p.142}`).
   * **De-hyphenation & Paragraph Unwrapping**: Measures vertical line leading to distinguish true paragraph breaks from soft wraps, stitching hyphenated words back together.
   * **Calibre/EPUB Sanitisation**: Recursively unwraps nested span tags and strips dead spine targets (`#part0001.html`).
+  * **Automated Audit & Reviewer Subagent**: Executes `audit_markdown.py` to verify footnote parity and page continuity, followed by a Reviewer Subagent pass to repair structural anomalies before the reader views the text.
+
+### `theological-translator`
+* **Role**: Unabridged, publication-grade translation of academic theology, liturgy, and patristics (principally Italian, Spanish, and Latin into classical British English).
+* **Dual-Agent Architecture**:
+  * **Agent 1 (Primary Translator)**: Renders the entire source text without condensing or omitting arguments, applying canonical equivalents from `references/theological_glossary.md`.
+  * **Automated Verification**: `scripts/verify_translation.py` verifies footnote count parity, table geometry, scriptural apparatus retention, and the complete absence of em dashes.
+  * **Agent 2 (Reviewer Subagent)**: Runs in a clean context window to perform line-by-line adversarial critique, eliminating Romance calques, elevating English prose style, and verifying Latin italics.
 
 ### `study` (by Fr. Oskari Juurikkala / AC HUB)
 * **Upstream**: [oskarijuurikkala/ac-hub-starter](https://github.com/oskarijuurikkala/ac-hub-starter)

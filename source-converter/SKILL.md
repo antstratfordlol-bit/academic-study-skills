@@ -76,10 +76,51 @@ python source-converter/academic_convert.py "<path-to-file>" "[output-path.md]" 
 
 ---
 
-## 4. Verification Checklist
+## 4. Automated Quality Audit & Subagent Review
+
+To guarantee zero corruption or formatting defects, every conversion passes through a two-tier review loop: a deterministic Python auditor followed by an adversarial Reviewer Subagent.
+
+### Tier 1: Deterministic Script Audit
+Run `audit_markdown.py` against the converted Markdown file:
+```bash
+python source-converter/audit_markdown.py "[output-path.md]"
+```
+This inspects:
+- **Footnote Parity**: Verifies every inline call `[^N]` possesses a corresponding `[^N]:` definition block, and flags orphaned definitions.
+- **Pagination Monotonicity**: Verifies that page anchors `[p. N]{#p.N}` ascend sequentially without duplicate folios or unannounced gaps.
+- **HTML / CSS Residue**: Detects raw `<span>`, `<div>`, Calibre tags, and InDesign spine remnants.
+- **Orphaned Hyphens**: Flags unmerged word fragments split across line breaks (e.g. `hypo- static`).
+
+### Tier 2: Reviewer Subagent Audit & Repair
+When anomalies are flagged, or when converting complex multi-column/scholarly texts, launch a Reviewer Subagent using a fresh context window.
+
+**Reviewer Subagent Prompt Pattern:**
+```markdown
+Role: Markdown Quality Reviewer & Forensic Auditor
+Task: Review candidate Markdown file against source anomalies.
+Input:
+  - Source file path: <source_path>
+  - Candidate Markdown: <candidate_path>
+  - Audit output: <audit_output>
+
+Instructions:
+1. Re-align any mismatched footnote markers with their source paragraphs.
+2. Resolve any broken sentence boundaries across page breaks: ensure no sentence is cut in half by an unclosed paragraph break.
+3. Remove any lingering running header or footer fragments.
+4. Verify all Greek, Hebrew, and Latin terms preserve their diacritics and italics.
+5. Ensure no em dashes exist in the output text (use colons, semicolons, or commas instead).
+6. Save the audited and repaired file.
+```
+
+---
+
+## 5. Verification Checklist
 
 After converting any academic source, verify the following:
 * [ ] **Reading order**: For two-column sources, verify that column 1 finishes completely before column 2 begins.
+* [ ] **Deterministic audit**: Run `audit_markdown.py` and confirm zero critical errors.
+* [ ] **Subagent review**: Completed for complex academic or multi-column works.
 * [ ] **No embedded running headers**: Check that chapter titles do not recur every few paragraphs.
 * [ ] **De-hyphenation**: Confirm that words across line wraps (e.g. `trans-substantiation`) are re-joined as a single word.
 * [ ] **Printed page anchors**: Ensure `[p. N]{#p.N}` milestones occur throughout the text for precise citation.
+* [ ] **Stylistic standards**: British English spelling throughout, and strictly no em dashes.
